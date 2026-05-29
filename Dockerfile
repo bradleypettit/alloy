@@ -8,8 +8,8 @@ FROM --platform=$BUILDPLATFORM grafana/alloy-build-image:v0.1.32@sha256:f9dd7a2d
 ARG BUILDPLATFORM
 COPY ./internal/web/ui /ui
 WORKDIR /ui
-RUN --mount=type=cache,target=/ui/node_modules,sharing=locked \
-    npm install                                               \
+RUN --mount=type=cache,target=/root/.npm,sharing=locked \
+    npm ci                                              \
     && npm run build
 
 FROM --platform=$BUILDPLATFORM grafana/alloy-build-image:v0.1.32@sha256:f9dd7a2db22b68d90f53fc190e5cd6a0b59dedd607e9d12dcb0182f1031f199d AS build
